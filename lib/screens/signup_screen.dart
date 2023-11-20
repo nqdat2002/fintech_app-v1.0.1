@@ -1,12 +1,18 @@
 import 'package:fintech_app/core/app_export.dart';
+import 'package:fintech_app/screens/login_screen.dart';
 import 'package:fintech_app/widgets/custom_elevated_button.dart';
 import 'package:fintech_app/widgets/custom_floating_text_field.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: must_be_immutable
-class BEmail2TwoScreen extends StatelessWidget {
-  BEmail2TwoScreen({Key? key}) : super(key: key);
+class SignupScreen extends StatefulWidget{
+  SignupScreen({Key? key}) : super(key: key);
+  @override
+  _SignupScreen createState() => _SignupScreen();
+}
 
+class _SignupScreen extends State<SignupScreen> {
   TextEditingController emailController = TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -22,7 +28,7 @@ class BEmail2TwoScreen extends StatelessWidget {
                 child: Container(
                     width: double.maxFinite,
                     padding:
-                        EdgeInsets.symmetric(horizontal: 16.h, vertical: 19.v),
+                    EdgeInsets.symmetric(horizontal: 16.h, vertical: 19.v),
                     child: Column(children: [
                       Align(
                           alignment: Alignment.centerLeft,
@@ -47,19 +53,19 @@ class BEmail2TwoScreen extends StatelessWidget {
                                             decoration: BoxDecoration(
                                                 color: appTheme.blueGray100,
                                                 borderRadius:
-                                                    BorderRadius.circular(2.h)),
+                                                BorderRadius.circular(2.h)),
                                             child: ClipRRect(
                                                 borderRadius:
-                                                    BorderRadius.circular(2.h),
+                                                BorderRadius.circular(2.h),
                                                 child: LinearProgressIndicator(
                                                     value: 0.52,
                                                     backgroundColor:
-                                                        appTheme.blueGray100,
+                                                    appTheme.blueGray100,
                                                     valueColor:
-                                                        AlwaysStoppedAnimation<
-                                                                Color>(
-                                                            appTheme
-                                                                .teal400)))))
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(
+                                                        appTheme
+                                                            .teal400)))))
                                   ]))),
                       SizedBox(height: 25.v),
                       _buildTextContainer(context),
@@ -73,7 +79,7 @@ class BEmail2TwoScreen extends StatelessWidget {
                           textInputAction: TextInputAction.done,
                           textInputType: TextInputType.emailAddress,
                           contentPadding:
-                              EdgeInsets.fromLTRB(14.h, 30.v, 14.h, 7.v)),
+                          EdgeInsets.fromLTRB(14.h, 30.v, 14.h, 7.v)),
                       SizedBox(height: 17.v),
                       RichText(
                           text: TextSpan(children: [
@@ -82,8 +88,16 @@ class BEmail2TwoScreen extends StatelessWidget {
                                 style: CustomTextStyles.labelLargeBluegray800),
                             TextSpan(
                                 text: "Log in here.",
-                                style:
-                                    CustomTextStyles.labelLargeTeal400SemiBold)
+                                style: CustomTextStyles.labelLargeTeal400SemiBold,
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.pushReplacement(context,
+                                        MaterialPageRoute(builder:
+                                        (context) => LoginScreen()
+                                        )
+                                    );
+                                  },
+                            )
                           ]),
                           textAlign: TextAlign.left),
                       SizedBox(height: 62.v),
@@ -110,7 +124,7 @@ class BEmail2TwoScreen extends StatelessWidget {
                                         .labelMediumTeal400Bold),
                                 TextSpan(
                                     text:
-                                        ". Your data will be securely encrypted with TLS. 🔒",
+                                    ". Your data will be securely encrypted with TLS. 🔒",
                                     style: CustomTextStyles.bodySmallOnPrimary)
                               ]),
                               textAlign: TextAlign.center)),
@@ -127,7 +141,7 @@ class BEmail2TwoScreen extends StatelessWidget {
         child: Padding(
             padding: EdgeInsets.only(right: 31.h),
             child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text("What’s your email?",
                   style: CustomTextStyles.headlineMediumBluegray900),
               SizedBox(height: 4.v),
