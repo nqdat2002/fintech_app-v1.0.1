@@ -1,6 +1,8 @@
 import 'package:fintech_app/core/app_export.dart';
+import 'package:fintech_app/screens/home_screen/home_screen.dart';
 import 'package:fintech_app/screens/signup_screen.dart';
 import 'package:fintech_app/widgets/custom_elevated_button.dart';
+import 'package:fintech_app/widgets/custom_floating_text_field.dart';
 import 'package:fintech_app/widgets/custom_text_form_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -16,12 +18,27 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
   bool isEmailValid = false;
   bool isPasswordVisible = false;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -30,12 +47,11 @@ class _LoginScreenState extends State<LoginScreen> {
             resizeToAvoidBottomInset: false,
             body: Form(
                 key: _formKey,
-                onChanged: () {
-                  // Khi form thay đổi, kiểm tra tính hợp lệ của email
-                  setState(() {
-                    isEmailValid = _isEmailValid(emailController.text);
-                  });
-                },
+                // onChanged: () {
+                //   setState(() {
+                //     isEmailValid = _isEmailValid(emailController.text);
+                //   });
+                // },
                 child: Container(
                     width: double.maxFinite,
                     padding:
@@ -81,12 +97,25 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: 26.v),
                       _buildLoginContainer(context),
                       SizedBox(height: 40.v),
-                      CustomTextFormField(
+                      CustomFloatingTextField(
+                          labelText: "Email address",
+                          labelStyle: CustomTextStyles.labelLargeGray90004,
                           controller: emailController,
                           hintText: "Email address",
                           hintStyle: CustomTextStyles.bodyMediumPrimary,
                           textInputAction: TextInputAction.done,
-                          textInputType: TextInputType.emailAddress),
+                          textInputType: TextInputType.emailAddress,
+                          contentPadding: EdgeInsets.fromLTRB(14.h, 30.v, 14.h, 7.v),
+                          validator: (value){
+                            if(value!.isEmpty){
+                              return "Fill your Email";
+                            }
+                            isEmailValid = _isEmailValid(value);
+                            if (!isEmailValid)
+                              return "Email is not valid";
+                          },
+                      ),
+
                       SizedBox(height: 40.v),
                       // CustomTextFormField(
                       //     controller: passwordController,
@@ -94,7 +123,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       //     hintStyle: CustomTextStyles.bodyMediumPrimary,
                       //     textInputAction: TextInputAction.done,
                       //     textInputType: TextInputType.visiblePassword),
-                      CustomTextFormField(
+                      CustomFloatingTextField(
+                        labelText: "Password",
+                        labelStyle: CustomTextStyles.labelLargeGray90004,
                         controller: passwordController,
                         hintText: "Password",
                         hintStyle: CustomTextStyles.bodyMediumPrimary,
@@ -112,6 +143,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             });
                           },
                         ),
+                        validator: (value){
+                          if(value!.isEmpty) {
+                            return "Fill your Password";
+                          }
+                        },
                       ),
                       SizedBox(height: 17.v),
                       RichText(
@@ -125,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: CustomTextStyles.labelLargeTeal400SemiBold,
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  Navigator.pushReplacement(
+                                  Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
@@ -135,13 +171,27 @@ class _LoginScreenState extends State<LoginScreen> {
                           ]),
                           textAlign: TextAlign.left),
                       Spacer(flex: 25),
+                      // CustomElevatedButton(
+                      //     text: "Continue",
+                      //     buttonStyle: (isEmailValid
+                      //         ? CustomButtonStyles.fillGray
+                      //         : CustomButtonStyles.fillGreenAD),
+                      //     buttonTextStyle: CustomTextStyles
+                      //         .titleMediumGeneralSansVariableBluegray20001),
                       CustomElevatedButton(
-                          text: "Continue",
-                          buttonStyle: (isEmailValid
-                              ? CustomButtonStyles.fillGray
-                              : CustomButtonStyles.fillGreenAD),
-                          buttonTextStyle: CustomTextStyles
-                              .titleMediumGeneralSansVariableBluegray20001),
+                        text: "Login",
+                        onPressed: (){
+                          if(_formKey.currentState!.validate()){
+                            emailController.clear();
+                            passwordController.clear();
+                            Navigator.pushReplacement(context,
+                                MaterialPageRoute(builder:
+                                    (context) => HomeScreen()
+                                )
+                            );
+                          }
+                        },
+                      ),
                       Spacer(flex: 74)
                     ]
                     )
@@ -172,6 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   bool _isEmailValid(String email) {
-    return email.contains('@');
+    return RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(email);
   }
 }

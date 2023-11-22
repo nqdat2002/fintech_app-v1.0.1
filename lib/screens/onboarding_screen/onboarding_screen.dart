@@ -1,4 +1,6 @@
 
+import 'package:fintech_app/screens/signup_screen.dart';
+
 import '../login_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fintech_app/core/app_export.dart';
@@ -63,6 +65,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               CustomElevatedButton(
                 text: "Sign up",
                 margin: EdgeInsets.symmetric(horizontal: 8.h),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => SignupScreen()));
+                },
 
               ),
               SizedBox(height: 18.v),

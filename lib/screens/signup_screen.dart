@@ -13,10 +13,22 @@ class SignupScreen extends StatefulWidget{
 }
 
 class _SignupScreen extends State<SignupScreen> {
-  TextEditingController emailController = TextEditingController();
-
+  late TextEditingController emailController;
+  bool isEmailValid = false;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    emailController = TextEditingController();
+  }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    emailController.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -78,8 +90,16 @@ class _SignupScreen extends State<SignupScreen> {
                           hintStyle: CustomTextStyles.labelLargeGray90004,
                           textInputAction: TextInputAction.done,
                           textInputType: TextInputType.emailAddress,
-                          contentPadding:
-                          EdgeInsets.fromLTRB(14.h, 30.v, 14.h, 7.v)),
+                          contentPadding: EdgeInsets.fromLTRB(14.h, 30.v, 14.h, 7.v),
+                          validator: (value){
+                            if(value!.isEmpty){
+                              return "Fill your Email";
+                            }
+                            isEmailValid = _isEmailValid(value);
+                            if (!isEmailValid)
+                              return "Email is not valid";
+                          },
+                      ),
                       SizedBox(height: 17.v),
                       RichText(
                           text: TextSpan(children: [
@@ -91,7 +111,7 @@ class _SignupScreen extends State<SignupScreen> {
                                 style: CustomTextStyles.labelLargeTeal400SemiBold,
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    Navigator.pushReplacement(context,
+                                    Navigator.push(context,
                                         MaterialPageRoute(builder:
                                         (context) => LoginScreen()
                                         )
@@ -161,5 +181,10 @@ class _SignupScreen extends State<SignupScreen> {
   /// Navigates back to the previous screen.
   onTapImgArrowLeft(BuildContext context) {
     Navigator.pop(context);
+  }
+
+  bool _isEmailValid(String email) {
+    return RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(email);
   }
 }
