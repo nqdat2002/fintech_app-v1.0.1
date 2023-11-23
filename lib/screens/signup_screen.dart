@@ -4,6 +4,7 @@ import 'package:fintech_app/widgets/custom_elevated_button.dart';
 import 'package:fintech_app/widgets/custom_floating_text_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 // ignore_for_file: must_be_immutable
 class SignupScreen extends StatefulWidget{
@@ -14,13 +15,32 @@ class SignupScreen extends StatefulWidget{
 
 class _SignupScreen extends State<SignupScreen> {
   late TextEditingController emailController;
+  late TextEditingController passwordController;
+  late TextEditingController confirmpasswordController;
   bool isEmailValid = false;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool isPasswordVisible = false;
+  bool isConfirmPasswordVisible = false;
+  String _email = "";
+  String _password = "";
+  // String _confirmpassword = "";
+
+  void _handleSignin() async{
+    try{
+      UserCredential us = await _auth.createUserWithEmailAndPassword(email: _email, password: _password);
+      print("User has been registered in: ${us.user!.email}");
+    }catch (e){
+      print("Err during registration");
+    }
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     emailController = TextEditingController();
+    passwordController = TextEditingController();
+    confirmpasswordController = TextEditingController();
   }
 
   @override
@@ -28,6 +48,8 @@ class _SignupScreen extends State<SignupScreen> {
     // TODO: implement dispose
     super.dispose();
     emailController.dispose();
+    passwordController.dispose();
+    confirmpasswordController.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -37,6 +59,13 @@ class _SignupScreen extends State<SignupScreen> {
             resizeToAvoidBottomInset: false,
             body: Form(
                 key: _formKey,
+                onChanged: (){
+                  setState(() {
+                    _email = emailController.text;
+                    _password = passwordController.text;
+                    // _confirmpassword = confirmpasswordController.text;
+                  });
+                },
                 child: Container(
                     width: double.maxFinite,
                     padding:
@@ -98,7 +127,72 @@ class _SignupScreen extends State<SignupScreen> {
                             isEmailValid = _isEmailValid(value);
                             if (!isEmailValid)
                               return "Email is not valid";
+                            return null;
                           },
+                      ),
+                      SizedBox(height: 40.v),
+                      CustomFloatingTextField(
+                        labelText: "Password",
+                        labelStyle: CustomTextStyles.labelLargeGray90004,
+                        controller: passwordController,
+                        hintText: "Password",
+                        hintStyle: CustomTextStyles.bodyMediumPrimary,
+                        textInputAction: TextInputAction.done,
+                        textInputType: TextInputType.visiblePassword,
+                        obscureText: !isPasswordVisible, // Ẩn mật khẩu khi isPasswordVisible là false
+                        suffix: IconButton(
+                          icon: Icon(
+                            isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                            color: Colors.grey,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isPasswordVisible = !isPasswordVisible;
+                            });
+                          },
+                        ),
+                        validator: (value){
+                          if(value!.isEmpty) {
+                            return "Fill your Password";
+                          }
+                          if (value.length < 8){
+                            return "Password must be at least 8 characters!!";
+                          }
+                          return null;
+                        },
+
+                      ),
+                      SizedBox(height: 40.v),
+                      CustomFloatingTextField(
+                        labelText: "Confirm Password",
+                        labelStyle: CustomTextStyles.labelLargeGray90004,
+                        controller: confirmpasswordController,
+                        hintText: "Confirm Password",
+                        hintStyle: CustomTextStyles.bodyMediumPrimary,
+                        textInputAction: TextInputAction.done,
+                        textInputType: TextInputType.visiblePassword,
+                        obscureText: !isConfirmPasswordVisible,
+                        suffix: IconButton(
+                          icon: Icon(
+                            isConfirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                            color: Colors.grey,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isConfirmPasswordVisible = !isConfirmPasswordVisible;
+                            });
+                          },
+                        ),
+                        validator: (value){
+                          if(value!.isEmpty) {
+                            return "Fill your Confirm Password";
+                          }
+                          if(value != passwordController.text){
+                            return "Confirm Password, no match!";
+                          }
+                          return null;
+                        },
+
                       ),
                       SizedBox(height: 17.v),
                       RichText(
@@ -149,7 +243,12 @@ class _SignupScreen extends State<SignupScreen> {
                               ]),
                               textAlign: TextAlign.center)),
                       SizedBox(height: 25.v),
-                      CustomElevatedButton(text: "Continue"),
+                      CustomElevatedButton(
+                        text: "Continue",
+                        onPressed: (){
+                          _handleSignin();
+                        },
+                      ),
                       SizedBox(height: 5.v)
                     ])))));
   }
@@ -184,7 +283,9 @@ class _SignupScreen extends State<SignupScreen> {
   }
 
   bool _isEmailValid(String email) {
-    return RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+    // return RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+    //     .hasMatch(email);
+    return RegExp(r'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
         .hasMatch(email);
   }
 }

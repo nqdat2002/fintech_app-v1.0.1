@@ -1,5 +1,7 @@
 
+import 'package:fintech_app/screens/home_screen/home_screen.dart';
 import 'package:fintech_app/screens/signup_screen.dart';
+import 'package:fintech_app/screens/view_screen.dart';
 
 import '../login_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -10,12 +12,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'widgets/safetransactions_item_widget.dart';
 import 'widgets/widget_item_widget.dart';
 import 'widgets/managingyourmoney_item_widget.dart';
-
-// class OnboardingScreen extends StatelessWidget {
-//   OnboardingScreen({Key? key})
-//       : super(
-//     key: key,
-//   );
 
 class OnboardingScreen extends StatefulWidget {
   OnboardingScreen({Key? key}) : super(key: key);
@@ -78,7 +74,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 buttonTextStyle:
                 CustomTextStyles.titleMediumGeneralSansVariableBluegray800,
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+
+                  // TEMP
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ViewScreen()));
+
+
                 },
               ),
               SizedBox(height: 5.v),

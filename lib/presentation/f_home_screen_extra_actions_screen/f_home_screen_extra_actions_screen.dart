@@ -990,9 +990,9 @@ class FHomeScreenExtraActionsScreen extends StatelessWidget {
         return AppRoutes.chooseABalanceToOpenPage;
       case BottomBarEnum.Cards:
         return "/";
-      case BottomBarEnum.Activity:
+      case BottomBarEnum.Insights:
         return AppRoutes.aInsightsIncomeTabContainerPage;
-      case BottomBarEnum.Profile:
+      case BottomBarEnum.Invite:
         return AppRoutes.inviteFriendsPage;
       default:
         return "/";

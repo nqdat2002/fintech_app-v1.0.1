@@ -1,11 +1,16 @@
+import 'dart:js_interop';
+
 import 'package:fintech_app/core/app_export.dart';
 import 'package:fintech_app/screens/home_screen/home_screen.dart';
+import 'package:fintech_app/screens/launcher_screen.dart';
 import 'package:fintech_app/screens/signup_screen.dart';
 import 'package:fintech_app/widgets/custom_elevated_button.dart';
 import 'package:fintech_app/widgets/custom_floating_text_field.dart';
 import 'package:fintech_app/widgets/custom_text_form_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 
 // // ignore_for_file: must_be_immutable
 // class LoginScreen extends StatelessWidget {
@@ -23,7 +28,10 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isEmailValid = false;
   bool isPasswordVisible = false;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  String _email = "";
+  String _password = "";
   @override
   void initState() {
     // TODO: implement initState
@@ -39,6 +47,20 @@ class _LoginScreenState extends State<LoginScreen> {
     emailController.dispose();
     passwordController.dispose();
   }
+
+  void _handleLogin() async{
+    try{
+      UserCredential us = await _auth.signInWithEmailAndPassword(email: _email, password: _password);
+      print("User has been logged-in: ${us.user!.email}");
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder:
+              (context) => LauncherScreen()
+          )
+      );
+    }catch (e){
+      print("Err during login");
+    }
+  }
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -47,11 +69,13 @@ class _LoginScreenState extends State<LoginScreen> {
             resizeToAvoidBottomInset: false,
             body: Form(
                 key: _formKey,
-                // onChanged: () {
-                //   setState(() {
-                //     isEmailValid = _isEmailValid(emailController.text);
-                //   });
-                // },
+                onChanged: () {
+                  setState(() {
+                    // isEmailValid = _isEmailValid(emailController.text);
+                    _email = emailController.text;
+                    _password = passwordController.text;
+                  });
+                },
                 child: Container(
                     width: double.maxFinite,
                     padding:
@@ -114,6 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (!isEmailValid)
                               return "Email is not valid";
                           },
+
                       ),
 
                       SizedBox(height: 40.v),
@@ -148,6 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             return "Fill your Password";
                           }
                         },
+
                       ),
                       SizedBox(height: 17.v),
                       RichText(
@@ -181,18 +207,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       CustomElevatedButton(
                         text: "Login",
                         onPressed: (){
+                          // // Tempt
+                          // Navigator.pushReplacement(context,
+                          //     MaterialPageRoute(builder:
+                          //         (context) => HomeScreen()
+                          //     )
+                          // );
+
+
                           if(_formKey.currentState!.validate()){
-                            emailController.clear();
-                            passwordController.clear();
-                            Navigator.pushReplacement(context,
-                                MaterialPageRoute(builder:
-                                    (context) => HomeScreen()
-                                )
-                            );
+                            _handleLogin();
                           }
                         },
                       ),
-                      Spacer(flex: 74)
+                      Spacer(flex: 74),
+
                     ]
                     )
                 )

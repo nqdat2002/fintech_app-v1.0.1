@@ -1,12 +1,8 @@
 import 'package:fintech_app/core/app_export.dart';
-import 'package:fintech_app/presentation/a_insights_income_tab_container_page/a_insights_income_tab_container_page.dart';
 import 'package:fintech_app/presentation/cards_page/cards_page.dart';
-import 'package:fintech_app/presentation/choose_a_balance_to_open_page/choose_a_balance_to_open_page.dart';
-import 'package:fintech_app/presentation/invite_friends_page/invite_friends_page.dart';
 import 'package:fintech_app/widgets/app_bar/appbar_title.dart';
 import 'package:fintech_app/widgets/app_bar/appbar_trailing_button.dart';
 import 'package:fintech_app/widgets/app_bar/custom_app_bar.dart';
-import 'package:fintech_app/widgets/custom_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 class CardScreen extends StatefulWidget {
@@ -19,10 +15,8 @@ class CardScreen extends StatefulWidget {
   _CardScreen createState() => _CardScreen();
 }
 
-class _CardScreen extends State<CardScreen>
-    with TickerProviderStateMixin {
+class _CardScreen extends State<CardScreen> with TickerProviderStateMixin {
   late TabController tabviewController;
-
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
@@ -34,30 +28,38 @@ class _CardScreen extends State<CardScreen>
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-
     return SafeArea(
       child: Scaffold(
         appBar: _buildAppBar(context),
-        body: SizedBox(
-          width: double.maxFinite,
-          child: Column(
-            children: [
-              SizedBox(height: 8.v),
-              _buildTabview(context),
-              SizedBox(
-                height: 568.v,
-                child: TabBarView(
-                  controller: tabviewController,
-                  children: [
-                    CardsPage(),
-                    CardsPage(),
-                  ],
-                ),
+        body: Container(
+            width: double.maxFinite,
+            padding: EdgeInsets.symmetric(vertical: 1.v),
+            child: Column(
+              children: [
+                SizedBox(height: 1.v),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                       children: [
+                          SizedBox(height: 8.v),
+                          _buildTabview(context),
+                          SizedBox(
+                            height: 568.v,
+                            child: TabBarView(
+                              controller: tabviewController,
+                              children: [
+                                CardsPage(),
+                                CardsPage(),
+                              ],
+                            ),
+                          ),
+                        ]
+                    ),
+                  ),
               ),
-            ],
+            ]
           ),
         ),
-        bottomNavigationBar: _buildTabBar(context),
       ),
     );
   }
@@ -135,45 +137,5 @@ class _CardScreen extends State<CardScreen>
         ],
       ),
     );
-  }
-
-  /// Section Widget
-  Widget _buildTabBar(BuildContext context) {
-    return CustomBottomBar(
-      onChanged: (BottomBarEnum type) {
-        Navigator.pushNamed(
-            navigatorKey.currentContext!, getCurrentRoute(type));
-      },
-    );
-  }
-
-  ///Handling route based on bottom click actions
-  String getCurrentRoute(BottomBarEnum type) {
-    switch (type) {
-      case BottomBarEnum.Home:
-        return AppRoutes.chooseABalanceToOpenPage;
-      case BottomBarEnum.Cards:
-        return "/";
-      case BottomBarEnum.Activity:
-        return AppRoutes.aInsightsIncomeTabContainerPage;
-      case BottomBarEnum.Profile:
-        return AppRoutes.inviteFriendsPage;
-      default:
-        return "/";
-    }
-  }
-
-  ///Handling page based on route
-  Widget getCurrentPage(String currentRoute) {
-    switch (currentRoute) {
-      case AppRoutes.chooseABalanceToOpenPage:
-        return ChooseABalanceToOpenPage();
-      case AppRoutes.aInsightsIncomeTabContainerPage:
-        return AInsightsIncomeTabContainerPage();
-      case AppRoutes.inviteFriendsPage:
-        return InviteFriendsPage();
-      default:
-        return DefaultWidget();
-    }
   }
 }

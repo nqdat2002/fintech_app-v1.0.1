@@ -1,15 +1,18 @@
+import 'dart:async';
+import 'package:fintech_app/screens/card_screen.dart';
+import 'package:fintech_app/screens/launcher_screen.dart';
+import '../../presentation/invite_friends_page/invite_friends_page.dart';
 import '../home_screen/adriansaccount_item_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fintech_app/core/app_export.dart';
-import 'package:fintech_app/presentation/a_insights_income_tab_container_page/a_insights_income_tab_container_page.dart';
-import 'package:fintech_app/presentation/choose_a_balance_to_open_page/choose_a_balance_to_open_page.dart';
-import 'package:fintech_app/presentation/invite_friends_page/invite_friends_page.dart';
 import 'package:fintech_app/widgets/app_bar/appbar_subtitle_fourteen.dart';
 import 'package:fintech_app/widgets/app_bar/appbar_trailing_image.dart';
 import 'package:fintech_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:fintech_app/widgets/custom_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
 
@@ -18,8 +21,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreen extends State<HomeScreen> {
-  int sliderIndex = 1;
+  int sliderIndex = 0;
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +48,7 @@ class _HomeScreen extends State<HomeScreen> {
                         height: 8.v,
                         child: AnimatedSmoothIndicator(
                           activeIndex: sliderIndex,
-                          count: 1,
+                          count: 2,
                           axisDirection: Axis.horizontal,
                           effect: ScrollingDotsEffect(
                             activeDotColor: Color(0X1212121D),
@@ -146,17 +150,20 @@ class _HomeScreen extends State<HomeScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: _buildBottomBar(context),
+        // bottomNavigationBar: _buildBottomBar(context),
       ),
     );
   }
 
   /// Section Widget
   PreferredSizeWidget _buildAppBar(BuildContext context) {
+    // temp
+    // String? _email = _auth.currentUser!.email;
     return CustomAppBar(
       height: 60.v,
       title: AppbarSubtitleFourteen(
-        text: "AK",
+        // text: _email!.substring(0, 6),
+        text: "HL",
         margin: EdgeInsets.only(left: 20.h),
       ),
       actions: [
@@ -167,6 +174,9 @@ class _HomeScreen extends State<HomeScreen> {
             top: 17.v,
             right: 16.h,
           ),
+          onTap: (){
+
+          }
         ),
         AppbarTrailingImage(
           imagePath: ImageConstant.img22x19,
@@ -175,6 +185,9 @@ class _HomeScreen extends State<HomeScreen> {
             top: 17.v,
             right: 36.h,
           ),
+          onTap: (){
+
+          }
         ),
       ],
     );
@@ -192,11 +205,10 @@ class _HomeScreen extends State<HomeScreen> {
           viewportFraction: 1.0,
           enableInfiniteScroll: false,
           scrollDirection: Axis.horizontal,
-          onPageChanged: (
-              index,
-              reason,
-              ) {
-            sliderIndex = index;
+          onPageChanged: (index, reason,) {
+            setState(() {
+              sliderIndex = index;
+            });
           },
         ),
         itemCount: 2,
@@ -398,14 +410,15 @@ class _HomeScreen extends State<HomeScreen> {
   }
 
   /// Section Widget
-  Widget _buildBottomBar(BuildContext context) {
-    return CustomBottomBar(
-      onChanged: (BottomBarEnum type) {
-        Navigator.pushNamed(
-            navigatorKey.currentContext!, getCurrentRoute(type));
-      },
-    );
-  }
+  // Widget _buildBottomBar(BuildContext context) {
+  //   return CustomBottomBar(
+  //     onChanged: (BottomBarEnum type) {
+  //       Navigator.pushNamed(
+  //           navigatorKey.currentContext!, getCurrentRoute(type)
+  //       );
+  //     },
+  //   );
+  // }
 
   /// Common widget
   Widget _buildCardClassic(
@@ -640,34 +653,34 @@ class _HomeScreen extends State<HomeScreen> {
       ),
     );
   }
-
-  ///Handling route based on bottom click actions
-  String getCurrentRoute(BottomBarEnum type) {
-    switch (type) {
-      case BottomBarEnum.Home:
-        return AppRoutes.chooseABalanceToOpenPage;
-      case BottomBarEnum.Cards:
-        return "/";
-      case BottomBarEnum.Activity:
-        return AppRoutes.aInsightsIncomeTabContainerPage;
-      case BottomBarEnum.Profile:
-        return AppRoutes.inviteFriendsPage;
-      default:
-        return "/";
-    }
-  }
-
-  /// Handling page based on route
-  Widget getCurrentPage(String currentRoute) {
-    switch (currentRoute) {
-      case AppRoutes.chooseABalanceToOpenPage:
-        return ChooseABalanceToOpenPage();
-      case AppRoutes.aInsightsIncomeTabContainerPage:
-        return AInsightsIncomeTabContainerPage();
-      case AppRoutes.inviteFriendsPage:
-        return InviteFriendsPage();
-      default:
-        return DefaultWidget();
-    }
-  }
+  //
+  // ///Handling route based on bottom click actions
+  // String getCurrentRoute(BottomBarEnum type) {
+  //   switch (type) {
+  //     case BottomBarEnum.Home:
+  //       return AppRoutes.aHomeScreenNotVerifiedScreen;
+  //     case BottomBarEnum.Cards:
+  //       return AppRoutes.cardsTabContainerScreen;
+  //     case BottomBarEnum.Insights:
+  //       return AppRoutes.aInsightsIncomeTabContainerPage;
+  //     case BottomBarEnum.Invite:
+  //       return AppRoutes.inviteFriendsPage;
+  //     default:
+  //       return "/";
+  //   }
+  // }
+  //
+  // /// Handling page based on route
+  // Widget getCurrentPage(String currentRoute) {
+  //   switch (currentRoute) {
+  //     case AppRoute.homeScreen:
+  //       return HomeScreen();
+  //     case AppRoute.cardScreen:
+  //       return CardScreen();
+  //     case AppRoutes.inviteFriendsPage:
+  //       return InviteFriendsPage();
+  //     default:
+  //       return DefaultWidget();
+  //   }
+  // }
 }

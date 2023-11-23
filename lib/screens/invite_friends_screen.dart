@@ -3,19 +3,19 @@ import 'package:fintech_app/widgets/custom_elevated_button.dart';
 import 'package:fintech_app/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 
-// ignore_for_file: must_be_immutable
-class InviteFriendsPage extends StatelessWidget {
-  const InviteFriendsPage({Key? key})
-      : super(
-    key: key,
-  );
+class InviteScreen extends StatefulWidget {
+  InviteScreen({Key? key}) : super(key: key);
 
+  @override
+  _InviteScreen createState() => _InviteScreen();
+}
+
+class _InviteScreen extends State<InviteScreen> {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
 
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
         body: Container(
           width: double.maxFinite,
           decoration: AppDecoration.fillGray,
@@ -59,7 +59,6 @@ class InviteFriendsPage extends StatelessWidget {
             ],
           ),
         ),
-      ),
     );
   }
 

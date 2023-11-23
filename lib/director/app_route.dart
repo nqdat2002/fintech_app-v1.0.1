@@ -7,12 +7,12 @@ import 'package:fintech_app/screens/card_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppRoute {
-  static String welcomeScreen = '/welcome_screen';
-  static String onboardScreen = '/onboarding_screen';
-  static String loginScreen = '/login_screen';
-  static String signupScreen = '/signup_screen';
-  static String homeScreen = '/home_screen';
-  static String cardScreen = '/card_screen';
+  static const String welcomeScreen = '/welcome_screen';
+  static const String onboardScreen = '/onboarding_screen';
+  static const String loginScreen = '/login_screen';
+  static const String signupScreen = '/signup_screen';
+  static const String homeScreen = '/home_screen';
+  static const String cardScreen = '/card_screen';
 
 
   static Map<String, WidgetBuilder> route = {
@@ -21,6 +21,6 @@ class AppRoute {
     loginScreen: (context) => LoginScreen(),
     signupScreen: (context) => SignupScreen(),
     homeScreen: (context) => HomeScreen(),
-    cardScreen: (cardScreen) => CardScreen()
+    cardScreen: (context) => CardScreen()
   };
 }

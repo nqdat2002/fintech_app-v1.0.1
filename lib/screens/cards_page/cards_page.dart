@@ -6,7 +6,6 @@ import 'package:fintech_app/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-// ignore_for_file: must_be_immutable
 class CardsPage extends StatefulWidget {
   const CardsPage({Key? key})
       : super(
@@ -47,7 +46,7 @@ class CardsPageState extends State<CardsPage>
                       margin: EdgeInsets.only(left: 148.h),
                       child: AnimatedSmoothIndicator(
                         activeIndex: sliderIndex,
-                        count: 1,
+                        count: 2,
                         axisDirection: Axis.horizontal,
                         effect: ScrollingDotsEffect(
                           activeDotColor: Color(0X1212121D),
@@ -81,14 +80,11 @@ class CardsPageState extends State<CardsPage>
           viewportFraction: 1.0,
           enableInfiniteScroll: false,
           scrollDirection: Axis.horizontal,
-          onPageChanged: (
-            index,
-            reason,
-          ) {
+          onPageChanged: (index, reason,) {
             sliderIndex = index;
           },
         ),
-        itemCount: 1,
+        itemCount: 2,
         itemBuilder: (context, index, realIndex) {
           return CardscontainerItemWidget();
         },

@@ -13,9 +13,9 @@ class WidgetItemWidget extends StatelessWidget {
       alignment: Alignment.center,
       child: CustomImageView(
         imagePath: ImageConstant.imgOnboardingIllustration,
-        height: 326.v,
-        width: 301.h,
-        margin: EdgeInsets.only(bottom: 8.v),
+        height: 306.v,
+        width: 359.h,
+        margin: EdgeInsets.only(bottom: 19.v),
       ),
     );
   }

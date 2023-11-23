@@ -10,10 +10,20 @@ class SafetransactionsItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomImageView(
-      imagePath: ImageConstant.imgSafeTransactions,
-      height: 374.v,
-      width: 366.h,
+    // return CustomImageView(
+    //   imagePath: ImageConstant.imgSafeTransactions,
+    //   height: 306.v,
+    //   width: 359.h,
+    // );
+
+    return Align(
+      alignment: Alignment.center,
+      child: CustomImageView(
+        imagePath: ImageConstant.imgSafeTransactions,
+        height: 306.v,
+        width: 359.h,
+        margin: EdgeInsets.only(bottom: 19.v),
+      ),
     );
   }
 }

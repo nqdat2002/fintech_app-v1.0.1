@@ -9,14 +9,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fintech_app/theme/theme_helper.dart';
 import 'package:fintech_app/routes/app_routes.dart';
+import 'package:fintech_app/director/app_route.dart';
+import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
 
-  ///Please update theme as per your need if required.
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   ThemeHelper().changeTheme('primary');
   runApp(MyApp());
 }
@@ -30,7 +35,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: MyHomePage(),
       // initialRoute: AppRoutes.aOnboarding1ThreeScreen,
-      routes: AppRoutes.routes,
+      routes: AppRoute.route,
     );
   }
 }

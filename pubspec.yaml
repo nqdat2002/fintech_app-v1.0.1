@@ -7,7 +7,6 @@ dependencies:
   flutter: 
     sdk: flutter
   cached_network_image: ^3.2.1
-  flutter_svg: ^1.1.6
   pin_code_fields: ^7.3.0
   carousel_slider: ^4.0.0
   smooth_page_indicator: ^1.0.0+2
@@ -19,7 +18,10 @@ dependencies:
 dev_dependencies: 
   flutter_test: 
     sdk: flutter
-flutter: 
+  firebase_core: ^2.23.0
+  firebase_auth: ^4.14.1
+  flutter_svg: ^2.0.9
+flutter:
   uses-material-design: true
   assets: 
     - assets/

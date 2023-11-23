@@ -1,19 +1,56 @@
-import 'package:fintech_app/core/app_export.dart';
+import 'dart:async';
+import 'package:fintech_app/presentation/a_standard_transfer_tab_container_screen/a_standard_transfer_tab_container_screen.dart';
 import 'package:fintech_app/screens/card_screen.dart';
+import 'package:fintech_app/screens/home_screen/home_screen.dart';
+import 'package:fintech_app/screens/insights_screen.dart';
+import 'package:fintech_app/screens/launcher_screen.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fintech_app/core/app_export.dart';
+import 'package:fintech_app/widgets/app_bar/appbar_subtitle_fourteen.dart';
+import 'package:fintech_app/widgets/app_bar/appbar_trailing_image.dart';
+import 'package:fintech_app/widgets/app_bar/custom_app_bar.dart';
+import 'package:fintech_app/widgets/custom_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fintech_app/presentation/invite_friends_page/invite_friends_page.dart';
+import 'package:fintech_app/presentation/a_insights_income_tab_container_page/a_insights_income_tab_container_page.dart';
 
-class CustomBottomBar extends StatefulWidget {
-  CustomBottomBar({this.onChanged});
-
-  Function(BottomBarEnum)? onChanged;
+class ViewScreen extends StatefulWidget {
+  ViewScreen({Key? key}) : super(key: key);
 
   @override
-  CustomBottomBarState createState() => CustomBottomBarState();
+  _ViewScreen createState() => _ViewScreen();
 }
 
-class CustomBottomBarState extends State<CustomBottomBar> {
-  int selectedIndexPage = 0;
+class _ViewScreen extends State<ViewScreen> {
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  @override
+  Widget build(BuildContext context) {
+    mediaQueryData = MediaQuery.of(context);
+    return SafeArea(
+        child: Scaffold(
+          bottomNavigationBar: _buildBottomBar(context),
+          // CustomBottomBar(
+          //   onChanged: (BottomBarEnum type) {
+          //     Navigator.pushNamed(
+          //         navigatorKey.currentContext!, getCurrentRoute(type)
+          //     );
+          //   },
+          // ),
+          body: <Widget>[
+            HomeScreen(),
+            CardScreen(),
+            AStandardTransferTabContainerScreen(),
+            InsightScreen(),
+            InviteFriendsPage(),
+          ][currentPageIndex],
+        )
+    );
+  }
+  int currentPageIndex = 0;
   List<BottomMenuModel> bottomMenuList = [
     BottomMenuModel(
       icon: ImageConstant.imgNavHomeTeal900,
@@ -47,9 +84,7 @@ class CustomBottomBarState extends State<CustomBottomBar> {
       type: BottomBarEnum.Invite,
     )
   ];
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildBottomBar(context){
     return Container(
       height: 97.v,
       decoration: BoxDecoration(
@@ -72,7 +107,7 @@ class CustomBottomBarState extends State<CustomBottomBar> {
         showUnselectedLabels: false,
         selectedFontSize: 0,
         elevation: 0,
-        currentIndex: selectedIndexPage,
+        currentIndex: currentPageIndex,
         type: BottomNavigationBarType.fixed,
         items: List.generate(bottomMenuList.length, (index) {
           if (bottomMenuList[index].isCircle) {
@@ -144,9 +179,9 @@ class CustomBottomBarState extends State<CustomBottomBar> {
         }),
         onTap: (index) {
           setState(() {
-            selectedIndexPage = index;
-            widget.onChanged?.call(bottomMenuList[index].type);
-            print(selectedIndexPage);
+            currentPageIndex = index;
+            // widget.onChanged?.call(bottomMenuList[index].type);
+            print(currentPageIndex);
           });
         },
       ),
@@ -204,3 +239,65 @@ class DefaultWidget extends StatelessWidget {
     );
   }
 }
+//   Widget _buildBottomBar(BuildContext context){
+//     return NavigationBar(
+//       onDestinationSelected: (int index) {
+//         setState(() {
+//           currentPageIndex = index;
+//         });
+//       },
+//       indicatorColor: Colors.amber,
+//       selectedIndex: currentPageIndex,
+//       destinations: const <Widget>[
+//         NavigationDestination(
+//           selectedIcon: Icon(Icons.home),
+//           icon: Icon(Icons.home_outlined),
+//           label: 'Home',
+//         ),
+//         NavigationDestination(
+//           icon: Badge(child: Icon(Icons.notifications_sharp)),
+//           label: 'Notifications',
+//         ),
+//         NavigationDestination(
+//           icon: Badge(
+//             label: Text('2'),
+//             child: Icon(Icons.messenger_sharp),
+//           ),
+//           label: 'Messages',
+//         ),
+//       ],
+//     );
+//   }
+//
+//   ///Handling route based on bottom click actions
+//   String getCurrentRoute(BottomBarEnum type) {
+//     switch (type) {
+//       case BottomBarEnum.Home:
+//         return AppRoutes.chooseABalanceToOpenPage;
+//       case BottomBarEnum.Cards:
+//         return AppRoutes.cardsTabContainerScreen;
+//       case BottomBarEnum.Insights:
+//         return AppRoutes.aInsightsIncomeTabContainerPage;
+//       case BottomBarEnum.Invite:
+//         return AppRoutes.inviteFriendsPage;
+//       default:
+//         return "/";
+//     }
+//   }
+//
+//   ///Handling page based on route
+//   Widget getCurrentPage(String currentRoute) {
+//     switch (currentRoute) {
+//       case AppRoutes.chooseABalanceToOpenPage:
+//         return ChooseABalanceToOpenPage();
+//       case AppRoutes.cardsTabContainerScreen:
+//         return CardsTabContainerScreen();
+//       case AppRoutes.aInsightsIncomeTabContainerPage:
+//         return AInsightsIncomeTabContainerPage();
+//       case AppRoutes.inviteFriendsPage:
+//         return InviteFriendsPage();
+//       default:
+//         return DefaultWidget();
+//     }
+//   }
+// }
