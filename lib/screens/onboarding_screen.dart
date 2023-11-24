@@ -1,17 +1,17 @@
 
-import 'package:fintech_app/screens/home_screen/home_screen.dart';
+import 'package:fintech_app/screens/home_screen.dart';
 import 'package:fintech_app/screens/signup_screen.dart';
 import 'package:fintech_app/screens/view_screen.dart';
 
-import '../login_screen.dart';
+import 'login_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fintech_app/core/app_export.dart';
 import 'package:fintech_app/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'widgets/safetransactions_item_widget.dart';
-import 'widgets/widget_item_widget.dart';
-import 'widgets/managingyourmoney_item_widget.dart';
+import 'onboarding_page/safetransactions_item_widget.dart';
+import 'onboarding_page/widget_item_widget.dart';
+import 'onboarding_page/managingyourmoney_item_widget.dart';
 
 class OnboardingScreen extends StatefulWidget {
   OnboardingScreen({Key? key}) : super(key: key);
@@ -74,11 +74,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 buttonTextStyle:
                 CustomTextStyles.titleMediumGeneralSansVariableBluegray800,
                 onPressed: () {
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
 
-                  // TEMP
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ViewScreen()));
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => ViewScreen()));
 
 
                 },
@@ -108,10 +106,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               viewportFraction: 1.0,
               enableInfiniteScroll: false,
               scrollDirection: Axis.horizontal,
-              onPageChanged: (
-                  index,
-                  reason,
-                  ) {
+              onPageChanged: (index, reason, ) {
                 // sliderIndex = index;
                 setState(() {
                   sliderIndex = index;

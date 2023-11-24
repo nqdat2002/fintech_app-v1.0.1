@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:fintech_app/presentation/a_onboarding_1_three_screen/a_onboarding_1_three_screen.dart';
-import 'package:fintech_app/presentation/welcome_screen/welcome_screen.dart';
-import 'package:fintech_app/presentation/welcome_to_smartbank_screen/welcome_to_smartbank_screen.dart';
-import 'package:fintech_app/screens/onboarding_screen/onboarding_screen.dart';
+import 'package:fintech_app/screens/welcome_screen.dart';
+import 'package:fintech_app/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/scheduler.dart';
@@ -47,12 +45,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3),
-            ()=>Navigator.pushReplacement(context,
-            MaterialPageRoute(builder:
-                (context) => OnboardingScreen()
-            )
-        )
+    Timer(
+        Duration(seconds: 3),
+            () => Navigator.pushReplacement(context,
+                    MaterialPageRoute(
+                        builder: (context) => OnboardingScreen()
+                  )
+              )
     );
   }
   @override

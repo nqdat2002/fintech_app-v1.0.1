@@ -1,5 +1,5 @@
 import 'package:fintech_app/core/app_export.dart';
-import 'package:fintech_app/presentation/cards_page/cards_page.dart';
+import 'package:fintech_app/screens/cards_page/cards_page.dart';
 import 'package:fintech_app/widgets/app_bar/appbar_title.dart';
 import 'package:fintech_app/widgets/app_bar/appbar_trailing_button.dart';
 import 'package:fintech_app/widgets/app_bar/custom_app_bar.dart';

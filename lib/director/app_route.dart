@@ -1,11 +1,11 @@
-import 'package:fintech_app/screens/home_screen/home_screen.dart';
+import 'package:fintech_app/screens/home_screen.dart';
 import 'package:fintech_app/screens/insights_screen.dart';
 import 'package:fintech_app/screens/invite_friends_screen.dart';
 import 'package:fintech_app/screens/signup_screen.dart';
 import 'package:fintech_app/screens/transfer_screen.dart';
 import 'package:fintech_app/screens/welcome_screen.dart';
 import 'package:fintech_app/screens/login_screen.dart';
-import 'package:fintech_app/screens/onboarding_screen/onboarding_screen.dart';
+import 'package:fintech_app/screens/onboarding_screen.dart';
 import 'package:fintech_app/screens/card_screen.dart';
 import 'package:flutter/material.dart';
 

@@ -43,15 +43,17 @@ class AppbarSubtitleFourteen extends StatelessWidget {
 
         child: Container(
           width: 31.h,
-          // height: 31.h,
+          height: 31.h,
           decoration: AppDecoration.fillTeal400.copyWith(
             borderRadius: BorderRadiusStyle.roundedBorder16,
           ),
-          child: Text(
-            text,
-            style: CustomTextStyles.labelMediumManropePrimaryContainer.copyWith(
-              color: theme.colorScheme.primaryContainer.withOpacity(1),
-            ),
+          child: Center(
+            child: Text(
+              text,
+              style: CustomTextStyles.labelMediumManropePrimaryContainer.copyWith(
+                color: theme.colorScheme.primaryContainer.withOpacity(1),
+              ),
+            )
           ),
         ),
       ),

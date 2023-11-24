@@ -307,6 +307,9 @@ class _InsightIncome extends State<InsightIncome> with AutomaticKeepAliveClientM
               top: 19.v,
               bottom: 20.v,
             ),
+            onTap: (){
+
+            }
           ),
         ],
       ),
@@ -330,8 +333,8 @@ class _InsightIncome extends State<InsightIncome> with AutomaticKeepAliveClientM
         children: [
           _buildFrame(
             context,
-            avgMonthlyIncome: "14530,12 ",
-            earnedThisMonth: "13540,40 ",
+            avgMonthlyIncome: "\$14530,12 ",
+            earnedThisMonth: "\$13540,40 ",
           ),
           SizedBox(height: 4.v),
           _buildFrame(
@@ -570,16 +573,16 @@ class _InsightIncome extends State<InsightIncome> with AutomaticKeepAliveClientM
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Opacity(
-          opacity: 0.3,
+          opacity: 1,
           child: Text(
             avgMonthlyIncome,
             style: CustomTextStyles.labelMediumBlack900.copyWith(
-              color: appTheme.black900.withOpacity(0.46),
+              color: appTheme.black900.withOpacity(1),
             ),
           ),
         ),
         Opacity(
-          opacity: 0.3,
+          opacity: 1,
           child: Text(
             earnedThisMonth,
             style: CustomTextStyles.labelMediumBlack900.copyWith(

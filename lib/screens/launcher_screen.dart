@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:fintech_app/core/app_export.dart';
-import 'package:fintech_app/screens/home_screen/home_screen.dart';
+import 'package:fintech_app/screens/home_screen.dart';
+import 'package:fintech_app/screens/view_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 // class Launcher extends StatelessWidget {
@@ -58,7 +59,7 @@ class _LauncherScreen extends State<StatefulWidget>
     Timer(Duration(seconds: 3),
             ()=>Navigator.pushReplacement(context,
             MaterialPageRoute(builder:
-                (context) => HomeScreen()
+                (context) => ViewScreen()
             )
         )
     );

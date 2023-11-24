@@ -24,7 +24,6 @@ class _SignupScreen extends State<SignupScreen> {
   bool isConfirmPasswordVisible = false;
   String _email = "";
   String _password = "";
-  // String _confirmpassword = "";
 
   void _handleSignin() async{
     try{
@@ -63,7 +62,6 @@ class _SignupScreen extends State<SignupScreen> {
                   setState(() {
                     _email = emailController.text;
                     _password = passwordController.text;
-                    // _confirmpassword = confirmpasswordController.text;
                   });
                 },
                 child: Container(
@@ -139,7 +137,7 @@ class _SignupScreen extends State<SignupScreen> {
                         hintStyle: CustomTextStyles.bodyMediumPrimary,
                         textInputAction: TextInputAction.done,
                         textInputType: TextInputType.visiblePassword,
-                        obscureText: !isPasswordVisible, // Ẩn mật khẩu khi isPasswordVisible là false
+                        obscureText: !isPasswordVisible, // hide password when isPasswordVisible is False
                         suffix: IconButton(
                           icon: Icon(
                             isPasswordVisible ? Icons.visibility : Icons.visibility_off,

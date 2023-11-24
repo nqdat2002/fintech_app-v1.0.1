@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 
 // ignore_for_file: must_be_immutable
 class InsightsExpenses extends StatefulWidget {
-  const InsightsExpenses({Key? key})
-      : super(
-    key: key,
-  );
+  const InsightsExpenses({Key? key}) : super( key: key,);
 
   @override
   _InsightsExpenses createState() => _InsightsExpenses();
@@ -336,11 +333,11 @@ class _InsightsExpenses extends State<InsightsExpenses>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "4530,12 ",
+                "\$4530,12 ",
                 style: CustomTextStyles.titleSmallBlack900Medium,
               ),
               Text(
-                "3540,40 ",
+                "\$3540,40 ",
                 style: CustomTextStyles.titleSmallBlack900Medium,
               ),
             ],
@@ -352,14 +349,14 @@ class _InsightsExpenses extends State<InsightsExpenses>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Opacity(
-                  opacity: 0.3,
+                  opacity: 0.9,
                   child: Text(
                     "Avg monthly spend",
                     style: CustomTextStyles.labelMediumBlack900,
                   ),
                 ),
                 Opacity(
-                  opacity: 0.3,
+                  opacity: 0.9,
                   child: Text(
                     "Spent this month",
                     style: CustomTextStyles.labelMediumBlack900,

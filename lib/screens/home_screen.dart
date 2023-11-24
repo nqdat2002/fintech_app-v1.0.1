@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'package:fintech_app/screens/card_screen.dart';
-import 'package:fintech_app/screens/launcher_screen.dart';
-import '../../presentation/invite_friends_page/invite_friends_page.dart';
-import '../home_screen/adriansaccount_item_widget.dart';
+import 'package:fintech_app/presentation/a_profile_screen/a_profile_screen.dart';
+import 'home_page/adriansaccount_item_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fintech_app/core/app_export.dart';
 import 'package:fintech_app/widgets/app_bar/appbar_subtitle_fourteen.dart';
@@ -158,13 +156,19 @@ class _HomeScreen extends State<HomeScreen> {
   /// Section Widget
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     // temp
-    // String? _email = _auth.currentUser!.email;
+    String? _email = _auth.currentUser!.email;
     return CustomAppBar(
       height: 60.v,
       title: AppbarSubtitleFourteen(
-        // text: _email!.substring(0, 6),
-        text: "HL",
+        text: _email!.substring(0, 4),
         margin: EdgeInsets.only(left: 20.h),
+        onTap: (){
+          Navigator.push(context,
+              MaterialPageRoute(builder:
+                  (context) => AProfileScreen()
+              )
+          );
+        },
       ),
       actions: [
         AppbarTrailingImage(
