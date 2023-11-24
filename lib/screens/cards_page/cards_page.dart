@@ -34,31 +34,35 @@ class CardsPageState extends State<CardsPage>
           child: Column(
             children: [
               SizedBox(height: 16.v),
-              Padding(
-                padding: EdgeInsets.only(left: 16.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildCardsContainer(context),
-                    SizedBox(height: 13.v),
-                    Container(
-                      height: 8.v,
-                      margin: EdgeInsets.only(left: 148.h),
-                      child: AnimatedSmoothIndicator(
-                        activeIndex: sliderIndex,
-                        count: 2,
-                        axisDirection: Axis.horizontal,
-                        effect: ScrollingDotsEffect(
-                          activeDotColor: Color(0X1212121D),
-                          dotHeight: 8.v,
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 16.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildCardsContainer(context),
+                        SizedBox(height: 13.v),
+                        Container(
+                          height: 8.v,
+                          margin: EdgeInsets.only(left: 148.h),
+                          child: AnimatedSmoothIndicator(
+                            activeIndex: sliderIndex,
+                            count: 2,
+                            axisDirection: Axis.horizontal,
+                            effect: ScrollingDotsEffect(
+                              activeDotColor: Color(0X1212121D),
+                              dotHeight: 8.v,
+                            ),
+                          ),
                         ),
-                      ),
+                        SizedBox(height: 14.v),
+                        _buildListItems(context),
+                        SizedBox(height: 11.v),
+                        _buildQuickActions(context),
+                      ],
                     ),
-                    SizedBox(height: 14.v),
-                    _buildListItems(context),
-                    SizedBox(height: 11.v),
-                    _buildQuickActions(context),
-                  ],
+                  ),
                 ),
               ),
             ],

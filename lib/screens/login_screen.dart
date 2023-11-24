@@ -1,5 +1,3 @@
-import 'dart:js_interop';
-
 import 'package:fintech_app/core/app_export.dart';
 import 'package:fintech_app/screens/home_screen.dart';
 import 'package:fintech_app/screens/launcher_screen.dart';
