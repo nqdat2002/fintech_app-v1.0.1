@@ -6,6 +6,7 @@ import 'package:fintech_app/screens/insights_screen.dart';
 import 'package:fintech_app/screens/launcher_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fintech_app/core/app_export.dart';
+import 'package:fintech_app/screens/transfer_screen.dart';
 import 'package:fintech_app/widgets/app_bar/appbar_subtitle_fourteen.dart';
 import 'package:fintech_app/widgets/app_bar/appbar_trailing_image.dart';
 import 'package:fintech_app/widgets/app_bar/custom_app_bar.dart';
@@ -43,7 +44,7 @@ class _ViewScreen extends State<ViewScreen> {
           body: <Widget>[
             HomeScreen(),
             CardScreen(),
-            AStandardTransferTabContainerScreen(),
+            TransferScreen(),
             InsightScreen(),
             InviteFriendsPage(),
           ][currentPageIndex],

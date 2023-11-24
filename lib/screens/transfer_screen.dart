@@ -1,19 +1,19 @@
 import 'package:fintech_app/core/app_export.dart';
-import 'package:fintech_app/presentation/a_own_transfer_page/a_own_transfer_page.dart';
-import 'package:fintech_app/presentation/b_standard_transfer_page/b_standard_transfer_page.dart';
+import 'package:fintech_app/screens/transfer_page/own_transfer_page.dart';
+import 'package:fintech_app/screens/transfer_page/standard_transfer_page.dart';
 import 'package:fintech_app/widgets/app_bar/appbar_subtitle_three.dart';
 import 'package:fintech_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
-class TransferSceen extends StatefulWidget {
-  const TransferSceen({Key? key}) : super(key: key);
+class TransferScreen extends StatefulWidget {
+  const TransferScreen({Key? key}) : super(key: key);
 
   @override
-  _TransferSceen createState() => _TransferSceen();
+  _TransferScreen createState() => _TransferScreen();
 }
 
 // ignore_for_file: must_be_immutable
-class _TransferSceen extends State<TransferSceen> with TickerProviderStateMixin {
+class _TransferScreen extends State<TransferScreen> with TickerProviderStateMixin {
   late TabController tabviewController;
 
   @override
@@ -32,18 +32,29 @@ class _TransferSceen extends State<TransferSceen> with TickerProviderStateMixin 
                 width: double.maxFinite,
                 child: Column(
                     children: [
-                      SizedBox(height: 12.v),
-                      _buildTabview(context),
-                      SizedBox(
-                          height: 673.v,
-                          child: TabBarView(
-                              controller: tabviewController,
-                              children: [
-                                BStandardTransferPage(),
-                                AOwnTransferPage()
-                              ]
-                          ),
-                      )
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child:Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 1.h),
+                              child: Column(
+                                children:[
+                                  SizedBox(height: 12.v),
+                                  _buildTabview(context),
+                                  SizedBox(
+                                    height: 673.v,
+                                    child: TabBarView(
+                                        controller: tabviewController,
+                                        children: [
+                                          StandardTransfer(),
+                                          OwnTransfer(),
+                                        ]
+                                    ),
+                                  )
+                                ]
+                              ),
+                          )
+                        )
+                    )
                     ]
                 )
             )
@@ -71,19 +82,14 @@ class _TransferSceen extends State<TransferSceen> with TickerProviderStateMixin 
                       margin: EdgeInsets.only(right: 4.h),
                       onTap: () {
                         onTapImgArrowLeft(context);
-                      }),
-                  CustomImageView(
-                      imagePath: ImageConstant.imgArrowLeft,
-                      height: 14.v,
-                      width: 16.h,
-                      alignment: Alignment.topCenter,
-                      margin: EdgeInsets.only(left: 4.h),
-                      onTap: () {
-                        onTapImgArrowLeft1(context);
-                      })
-            ])),
+                      }
+                  ),
+                ]
+            ),
+        ),
         centerTitle: true,
-        title: AppbarSubtitleThree(text: "Transfer"));
+        title: AppbarSubtitleThree(text: "Transfer"),
+    );
   }
 
   /// Section Widget
@@ -125,11 +131,6 @@ class _TransferSceen extends State<TransferSceen> with TickerProviderStateMixin 
 
   /// Navigates back to the previous screen.
   onTapImgArrowLeft(BuildContext context) {
-    Navigator.pop(context);
-  }
-
-  /// Navigates back to the previous screen.
-  onTapImgArrowLeft1(BuildContext context) {
     Navigator.pop(context);
   }
 }
