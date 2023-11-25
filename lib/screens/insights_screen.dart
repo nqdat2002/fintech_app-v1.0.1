@@ -34,30 +34,39 @@ class _InsightScreen extends State<InsightScreen> with TickerProviderStateMixin 
           width: double.maxFinite,
           decoration: AppDecoration.fillGray,
           child: Column(
-            children: [
-              SizedBox(height: 12.v),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 16.h),
-                  child: Text(
-                    "Insights",
-                    style: CustomTextStyles.displaySmallPrimaryContainer,
-                  ),
+              children: [
+                SizedBox(height: 1.v),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(height: 12.v),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 16.h),
+                            child: Text(
+                              "Insights",
+                              style: CustomTextStyles.displaySmallPrimaryContainer,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 9.v),
+                        _buildTabview(context),
+                        SizedBox(
+                          height: 567.v,
+                          child: TabBarView(
+                            controller: tabviewController,
+                            children: [
+                              InsightIncome(),
+                              InsightsExpenses(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                          ),
                 ),
-              ),
-              SizedBox(height: 9.v),
-              _buildTabview(context),
-              SizedBox(
-                height: 567.v,
-                child: TabBarView(
-                  controller: tabviewController,
-                  children: [
-                    InsightIncome(),
-                    InsightsExpenses(),
-                  ],
-                ),
-              ),
             ],
           ),
         ),

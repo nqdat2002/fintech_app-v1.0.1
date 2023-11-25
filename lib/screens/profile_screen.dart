@@ -1,7 +1,9 @@
 import 'package:fintech_app/core/app_export.dart';
+import 'package:fintech_app/screens/onboarding_screen.dart';
 import 'package:fintech_app/widgets/custom_elevated_button.dart';
 import 'package:fintech_app/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key? key}) : super(key: key);
@@ -11,6 +13,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreen extends State<ProfileScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -128,9 +132,19 @@ class _ProfileScreen extends State<ProfileScreen> {
                                                   child: CustomImageView(
                                                       imagePath: ImageConstant
                                                           .imgAkarIconsInstagramFill)))
-                                        ]))
-                              ]))))
-                ]))));
+                                        ]
+                                    )
+                                )
+                              ]
+                              )
+                          )
+                      )
+                  )
+                ]
+                )
+            )
+        )
+    );
   }
 
   /// Section Widget
@@ -138,36 +152,41 @@ class _ProfileScreen extends State<ProfileScreen> {
     return Padding(
         padding: EdgeInsets.only(left: 2.h),
         child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Padding(
-              padding: EdgeInsets.only(bottom: 1.v),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Adrian UIUX", style: theme.textTheme.headlineMedium),
-                    SizedBox(height: 2.v),
-                    Text("Personal account",
-                        style: CustomTextStyles.titleMediumBluegray400)
-                  ])),
-          SizedBox(
-              height: 60.v,
-              width: 56.h,
-              child: Stack(alignment: Alignment.bottomRight, children: [
-                Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                        padding: EdgeInsets.all(12.h),
-                        decoration: AppDecoration.fillTeal5003.copyWith(
-                            borderRadius: BorderRadiusStyle.circleBorder28),
-                        child: Text("AK", style: theme.textTheme.titleLarge))),
-                CustomImageView(
-                    imagePath: ImageConstant.imgFrame162701,
-                    height: 20.adaptSize,
-                    width: 20.adaptSize,
-                    alignment: Alignment.bottomRight,
-                    margin: EdgeInsets.only(right: 3.h))
-              ]))
-        ]));
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                Padding(
+                    padding: EdgeInsets.only(bottom: 1.v),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Adrian UIUX", style: theme.textTheme.headlineMedium),
+                          SizedBox(height: 2.v),
+                          Text("Personal account",
+                              style: CustomTextStyles.titleMediumBluegray400)
+                        ])),
+                SizedBox(
+                    height: 60.v,
+                    width: 56.h,
+                    child: Stack(alignment: Alignment.bottomRight, children: [
+                      Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                              padding: EdgeInsets.all(12.h),
+                              decoration: AppDecoration.fillTeal5003.copyWith(
+                                  borderRadius: BorderRadiusStyle.circleBorder28),
+                              child: Text("AK", style: theme.textTheme.titleLarge))),
+                      CustomImageView(
+                          imagePath: ImageConstant.imgFrame162701,
+                          height: 20.adaptSize,
+                          width: 20.adaptSize,
+                          alignment: Alignment.bottomRight,
+                          margin: EdgeInsets.only(right: 3.h))
+                    ]
+                    )
+                )
+            ]
+        )
+    );
   }
 
   /// Section Widget
@@ -223,9 +242,15 @@ class _ProfileScreen extends State<ProfileScreen> {
                               buttonStyle: CustomButtonStyles.fillTeal,
                               buttonTextStyle: CustomTextStyles
                                   .labelMediumManropeErrorContainer)
-                        ]))
-                  ]))
-        ]));
+                        ]
+                        )
+                    )
+                  ]
+              )
+          )
+        ]
+        )
+    );
   }
 
   /// Section Widget
@@ -283,7 +308,9 @@ class _ProfileScreen extends State<ProfileScreen> {
                     child:
                         Text("Documents", style: theme.textTheme.titleMedium))
               ])
-            ]));
+            ]
+        )
+    );
   }
 
   /// Section Widget
@@ -324,12 +351,17 @@ class _ProfileScreen extends State<ProfileScreen> {
                             imagePath: ImageConstant.imgVectorBlueGray90002,
                             height: 20.v,
                             width: 16.h,
-                            margin: EdgeInsets.symmetric(vertical: 2.v)),
+                            margin: EdgeInsets.symmetric(vertical: 2.v)
+                        ),
                         Padding(
                             padding: EdgeInsets.only(left: 19.h),
                             child: Text("Change passcode",
-                                style: theme.textTheme.titleMedium))
-                      ]))),
+                                style: theme.textTheme.titleMedium)
+                        )
+                      ]
+                      )
+                  )
+              ),
               SizedBox(height: 24.v),
               SizedBox(
                   height: 1.v,
@@ -337,10 +369,12 @@ class _ProfileScreen extends State<ProfileScreen> {
                   child: Stack(alignment: Alignment.center, children: [
                     Align(
                         alignment: Alignment.center,
-                        child: SizedBox(width: 327.h, child: Divider())),
+                        child: SizedBox(width: 327.h, child: Divider())
+                    ),
                     Align(
                         alignment: Alignment.center,
-                        child: SizedBox(width: 327.h, child: Divider()))
+                        child: SizedBox(width: 327.h, child: Divider())
+                    )
                   ])),
               SizedBox(height: 15.v),
               Align(
@@ -364,7 +398,9 @@ class _ProfileScreen extends State<ProfileScreen> {
                                   height: 20.v,
                                   width: 16.h,
                                   alignment: Alignment.center)
-                            ])),
+                            ]
+                                )
+                        ),
                         Container(
                             height: 24.v,
                             width: 57.h,
@@ -374,13 +410,18 @@ class _ProfileScreen extends State<ProfileScreen> {
                               Align(
                                   alignment: Alignment.center,
                                   child: Text("Privacy",
-                                      style: theme.textTheme.titleMedium)),
+                                      style: theme.textTheme.titleMedium)
+                              ),
                               Align(
                                   alignment: Alignment.center,
                                   child: Text("Privacy",
-                                      style: theme.textTheme.titleMedium))
+                                      style: theme.textTheme.titleMedium)
+                              )
                             ]))
-                      ]))),
+                      ]
+                      )
+                  )
+              ),
               SizedBox(height: 24.v),
               Divider(indent: 3.h, endIndent: 3.h),
               SizedBox(height: 15.v),
@@ -393,7 +434,8 @@ class _ProfileScreen extends State<ProfileScreen> {
                             imagePath: ImageConstant.imgIconlyLightOutlineScan,
                             height: 18.v,
                             width: 22.h,
-                            margin: EdgeInsets.only(top: 6.v, bottom: 5.v)),
+                            margin: EdgeInsets.only(top: 6.v, bottom: 5.v)
+                        ),
                         Padding(
                             padding: EdgeInsets.only(
                                 left: 16.h, top: 3.v, bottom: 3.v),
@@ -429,8 +471,12 @@ class _ProfileScreen extends State<ProfileScreen> {
                             imagePath: ImageConstant.imgButtonsGray600,
                             height: 31.v,
                             width: 51.h)
-                      ]))
-            ]));
+                      ]
+                  )
+              )
+            ]
+        )
+    );
   }
 
   /// Section Widget
@@ -543,10 +589,24 @@ class _ProfileScreen extends State<ProfileScreen> {
                     width: 24.adaptSize),
                 Padding(
                     padding: EdgeInsets.only(left: 16.h),
-                    child: Text("Log out", style: theme.textTheme.titleMedium))
+                    child: GestureDetector(
+                      onTap: () {
+                        _auth.signOut();
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder:
+                           (context) => OnboardingScreen())
+                        );
+                      },
+                      child: Text(
+                        "Logout",
+                        style: theme.textTheme.titleMedium,
+                      ),
+                    )
+                )
               ]),
               SizedBox(height: 4.v)
-            ]));
+            ]
+        )
+    );
   }
 
   /// Navigates back to the previous screen.

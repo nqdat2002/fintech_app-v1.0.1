@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'package:fintech_app/presentation/a_profile_screen/a_profile_screen.dart';
+import 'package:fintech_app/screens/profile_screen.dart';
+
 import 'home_page/adriansaccount_item_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fintech_app/core/app_export.dart';
@@ -165,7 +166,7 @@ class _HomeScreen extends State<HomeScreen> {
         onTap: (){
           Navigator.push(context,
               MaterialPageRoute(builder:
-                  (context) => AProfileScreen()
+                  (context) => ProfileScreen()
               )
           );
         },
