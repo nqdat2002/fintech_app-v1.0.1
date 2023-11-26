@@ -24,11 +24,17 @@ class _SignupScreen extends State<SignupScreen> {
   bool isConfirmPasswordVisible = false;
   String _email = "";
   String _password = "";
+  String _confirm_password = "";
 
   void _handleSignin() async{
     try{
       UserCredential us = await _auth.createUserWithEmailAndPassword(email: _email, password: _password);
       print("User has been registered in: ${us.user!.email}");
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder:
+              (context) => LoginScreen()
+          )
+      );
     }catch (e){
       print("Err during registration");
     }
@@ -62,6 +68,7 @@ class _SignupScreen extends State<SignupScreen> {
                   setState(() {
                     _email = emailController.text;
                     _password = passwordController.text;
+                    _confirm_password = confirmpasswordController.text;
                   });
                 },
                 child: Container(

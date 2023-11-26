@@ -1,15 +1,20 @@
 import 'package:fintech_app/core/app_export.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+class AdriansaccountItemWidget extends StatefulWidget {
+  AdriansaccountItemWidget({Key? key}) : super(key: key);
+
+  @override
+  _AdriansaccountItemWidget createState() => _AdriansaccountItemWidget();
+}
 // ignore: must_be_immutable
-class AdriansaccountItemWidget extends StatelessWidget {
-  const AdriansaccountItemWidget({Key? key})
-      : super(
-          key: key,
-        );
+class _AdriansaccountItemWidget extends State<AdriansaccountItemWidget> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
+    String? _email = _auth.currentUser!.email;
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 11.h,
@@ -30,7 +35,7 @@ class AdriansaccountItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Adrian’s Account".toUpperCase(),
+                      _email!.substring(0, 4).toUpperCase(),
                       style: CustomTextStyles.titleSmallManropePrimaryContainer,
                     ),
                     SizedBox(height: 3.v),

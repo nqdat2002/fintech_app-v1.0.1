@@ -149,6 +149,7 @@ class _ProfileScreen extends State<ProfileScreen> {
 
   /// Section Widget
   Widget _buildProfileNameAvatar(BuildContext context) {
+    String? _email = _auth.currentUser!.email;
     return Padding(
         padding: EdgeInsets.only(left: 2.h),
         child:
@@ -159,7 +160,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Adrian UIUX", style: theme.textTheme.headlineMedium),
+                          Text(_email!.substring(0, 4), style: theme.textTheme.headlineMedium),
                           SizedBox(height: 2.v),
                           Text("Personal account",
                               style: CustomTextStyles.titleMediumBluegray400)
@@ -174,7 +175,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                               padding: EdgeInsets.all(12.h),
                               decoration: AppDecoration.fillTeal5003.copyWith(
                                   borderRadius: BorderRadiusStyle.circleBorder28),
-                              child: Text("AK", style: theme.textTheme.titleLarge))),
+                              child: Text(_email!.substring(0, 2), style: theme.textTheme.titleLarge))),
                       CustomImageView(
                           imagePath: ImageConstant.imgFrame162701,
                           height: 20.adaptSize,
