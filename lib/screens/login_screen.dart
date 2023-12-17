@@ -1,4 +1,5 @@
 import 'package:fintech_app/core/app_export.dart';
+import 'package:fintech_app/screens/confirm_your_email_screen.dart';
 import 'package:fintech_app/screens/home_screen.dart';
 import 'package:fintech_app/screens/launcher_screen.dart';
 import 'package:fintech_app/screens/signup_screen.dart';
@@ -49,6 +50,15 @@ class _LoginScreenState extends State<LoginScreen> {
   void _handleLogin() async{
     try{
       UserCredential us = await _auth.signInWithEmailAndPassword(email: _email, password: _password);
+      bool isEmailVerified = _auth.currentUser!.emailVerified;
+      if (!isEmailVerified){
+        Navigator.push(context,
+            MaterialPageRoute(builder:
+                (context) => ConfirmYourEmailScreen()
+            )
+        );
+        return;
+      }
       print("User has been logged-in: ${us.user!.email}");
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder:
@@ -56,6 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
           )
       );
     }catch (e){
+      _showSnackBar("Tài khoản hoặc mật khẩu không chính xác!");
       print("Err during login");
     }
   }
@@ -67,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
             resizeToAvoidBottomInset: false,
             body: Form(
                 key: _formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 onChanged: () {
                   setState(() {
                     // isEmailValid = _isEmailValid(emailController.text);
@@ -114,8 +126,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         AlwaysStoppedAnimation<
                                                                 Color>(
                                                             appTheme
-                                                                .teal400)))))
-                                  ]))),
+                                                                .teal400)
+                                                )
+                                            )
+                                        )
+                                    )
+                                  ]
+                              )
+                          )
+                      ),
                       SizedBox(height: 26.v),
                       _buildLoginContainer(context),
                       SizedBox(height: 40.v),
@@ -140,12 +159,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
 
                       SizedBox(height: 40.v),
-                      // CustomTextFormField(
-                      //     controller: passwordController,
-                      //     hintText: "Password",
-                      //     hintStyle: CustomTextStyles.bodyMediumPrimary,
-                      //     textInputAction: TextInputAction.done,
-                      //     textInputType: TextInputType.visiblePassword),
                       CustomFloatingTextField(
                         labelText: "Password",
                         labelStyle: CustomTextStyles.labelLargeGray90004,
@@ -195,13 +208,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           ]),
                           textAlign: TextAlign.left),
                       Spacer(flex: 25),
-                      // CustomElevatedButton(
-                      //     text: "Continue",
-                      //     buttonStyle: (isEmailValid
-                      //         ? CustomButtonStyles.fillGray
-                      //         : CustomButtonStyles.fillGreenAD),
-                      //     buttonTextStyle: CustomTextStyles
-                      //         .titleMediumGeneralSansVariableBluegray20001),
                       CustomElevatedButton(
                         text: "Login",
                         onPressed: (){
@@ -251,5 +257,12 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isEmailValid(String email) {
     return RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
         .hasMatch(email);
+  }
+  void _showSnackBar(String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 3), // Thời gian hiển thị của SnackBar
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

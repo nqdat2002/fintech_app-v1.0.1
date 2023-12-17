@@ -27,17 +27,17 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       default:
         throw UnsupportedError(
@@ -47,29 +47,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAw_VSUSYuWhQmFXrPe5yLuNBMK8alYyuA',
-    appId: '1:814487374485:web:d32ff0571d27c15350a99c',
-    messagingSenderId: '814487374485',
-    projectId: 'fintechapp-b5552',
-    authDomain: 'fintechapp-b5552.firebaseapp.com',
-    storageBucket: 'fintechapp-b5552.appspot.com',
-    measurementId: 'G-FLB32QT7FK',
+    apiKey: 'AIzaSyDtx3QGNrFWba2t76iZIk8VmSmrLsLXe0I',
+    appId: '1:627219651626:web:142f5173bf4ed70f607753',
+    messagingSenderId: '627219651626',
+    projectId: 'fintechappv2',
+    authDomain: 'fintechappv2.firebaseapp.com',
+    storageBucket: 'fintechappv2.appspot.com',
+    measurementId: 'G-P612Z66ZEK',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBvsanI5mwrIfnmN2dMWBxXWLbLWXNCVxs',
-    appId: '1:814487374485:android:a54ede1a3d3e55f750a99c',
-    messagingSenderId: '814487374485',
-    projectId: 'fintechapp-b5552',
-    storageBucket: 'fintechapp-b5552.appspot.com',
+    apiKey: 'AIzaSyC5vN3d1OGScFFeDRuIhKRlNoOWkcLBEoM',
+    appId: '1:627219651626:android:0103f93bdcc844d8607753',
+    messagingSenderId: '627219651626',
+    projectId: 'fintechappv2',
+    storageBucket: 'fintechappv2.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBDeI90Qx64UWlLvbXYUjyX5siLsUIP3GE',
-    appId: '1:814487374485:ios:fbbad2abe33bae4850a99c',
-    messagingSenderId: '814487374485',
-    projectId: 'fintechapp-b5552',
-    storageBucket: 'fintechapp-b5552.appspot.com',
+    apiKey: 'AIzaSyDYkQ5QLnhTIye1LJ9xcp77zgD7PKSRAWs',
+    appId: '1:627219651626:ios:296abb8add6c5029607753',
+    messagingSenderId: '627219651626',
+    projectId: 'fintechappv2',
+    storageBucket: 'fintechappv2.appspot.com',
     iosBundleId: 'com.fintechapp.app',
   );
 }

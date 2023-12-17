@@ -12,7 +12,6 @@ class TransferScreen extends StatefulWidget {
   _TransferScreen createState() => _TransferScreen();
 }
 
-// ignore_for_file: must_be_immutable
 class _TransferScreen extends State<TransferScreen> with TickerProviderStateMixin {
   late TabController tabviewController;
 
@@ -128,9 +127,7 @@ class _TransferScreen extends State<TransferScreen> with TickerProviderStateMixi
         )
     );
   }
-
-  /// Navigates back to the previous screen.
   onTapImgArrowLeft(BuildContext context) {
-    Navigator.pop(context);
+    // Navigator.pop(context);
   }
 }

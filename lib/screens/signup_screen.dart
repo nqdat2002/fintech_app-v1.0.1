@@ -6,6 +6,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'confirm_your_email_screen.dart';
+
 // ignore_for_file: must_be_immutable
 class SignupScreen extends StatefulWidget{
   SignupScreen({Key? key}) : super(key: key);
@@ -20,6 +22,7 @@ class _SignupScreen extends State<SignupScreen> {
   bool isEmailValid = false;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   bool isPasswordVisible = false;
   bool isConfirmPasswordVisible = false;
   String _email = "";
@@ -28,15 +31,21 @@ class _SignupScreen extends State<SignupScreen> {
 
   void _handleSignin() async{
     try{
+      var checkUser = await _auth.fetchSignInMethodsForEmail(_email);
+      if (checkUser.isNotEmpty) {
+        _showSnackBar("Email đã được đăng ký!");
+        return;
+      }
       UserCredential us = await _auth.createUserWithEmailAndPassword(email: _email, password: _password);
       print("User has been registered in: ${us.user!.email}");
-      Navigator.pushReplacement(context,
+      Navigator.push(context,
           MaterialPageRoute(builder:
-              (context) => LoginScreen()
+              (context) => ConfirmYourEmailScreen()
           )
       );
     }catch (e){
       print("Err during registration");
+      _showSnackBar("Đăng ký thất bại. Vui lòng thử lại!");
     }
   }
   @override
@@ -64,6 +73,7 @@ class _SignupScreen extends State<SignupScreen> {
             resizeToAvoidBottomInset: false,
             body: Form(
                 key: _formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 onChanged: (){
                   setState(() {
                     _email = emailController.text;
@@ -75,7 +85,8 @@ class _SignupScreen extends State<SignupScreen> {
                     width: double.maxFinite,
                     padding:
                     EdgeInsets.symmetric(horizontal: 16.h, vertical: 19.v),
-                    child: Column(children: [
+                    child: Column(
+                        children: [
                       Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(
@@ -108,11 +119,15 @@ class _SignupScreen extends State<SignupScreen> {
                                                     backgroundColor:
                                                     appTheme.blueGray100,
                                                     valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(
-                                                        appTheme
-                                                            .teal400)))))
-                                  ]))),
+                                                    AlwaysStoppedAnimation<Color>(appTheme.teal400)
+                                                )
+                                            )
+                                        )
+                                    )
+                                  ]
+                              )
+                          )
+                      ),
                       SizedBox(height: 25.v),
                       _buildTextContainer(context),
                       SizedBox(height: 23.v),
@@ -200,25 +215,29 @@ class _SignupScreen extends State<SignupScreen> {
 
                       ),
                       SizedBox(height: 17.v),
-                      RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                                text: "Have an account? ",
-                                style: CustomTextStyles.labelLargeBluegray800),
-                            TextSpan(
-                                text: "Log in here.",
-                                style: CustomTextStyles.labelLargeTeal400SemiBold,
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder:
-                                        (context) => LoginScreen()
-                                        )
-                                    );
-                                  },
-                            )
-                          ]),
-                          textAlign: TextAlign.left),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RichText(
+                              text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                        text: "Have an account? ",
+                                        style: CustomTextStyles.labelLargeBluegray800),
+                                    TextSpan(
+                                        text: "Log in here.",
+                                        style: CustomTextStyles.labelLargeTeal400SemiBold,
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen())
+                                            );
+                                          },
+                                    )
+                                ]
+                              ),
+                              textAlign: TextAlign.left),
+                        ),
+                      ),
                       SizedBox(height: 62.v),
                       Container(
                           width: 337.h,
@@ -230,8 +249,7 @@ class _SignupScreen extends State<SignupScreen> {
                                     style: CustomTextStyles.bodySmallOnPrimary),
                                 TextSpan(
                                     text: "Terms & Conditions",
-                                    style: CustomTextStyles
-                                        .labelMediumTeal400Bold),
+                                    style: CustomTextStyles.labelMediumTeal400Bold),
                                 TextSpan(text: " "),
                                 TextSpan(
                                     text: "and",
@@ -239,8 +257,7 @@ class _SignupScreen extends State<SignupScreen> {
                                 TextSpan(text: " "),
                                 TextSpan(
                                     text: "Privacy Policy",
-                                    style: CustomTextStyles
-                                        .labelMediumTeal400Bold),
+                                    style: CustomTextStyles.labelMediumTeal400Bold),
                                 TextSpan(
                                     text:
                                     ". Your data will be securely encrypted with TLS. 🔒",
@@ -251,7 +268,10 @@ class _SignupScreen extends State<SignupScreen> {
                       CustomElevatedButton(
                         text: "Continue",
                         onPressed: (){
-                          _handleSignin();
+                           // _handleSignin();
+                          if(_formKey.currentState!.validate()){
+                            _handleSignin();
+                          }
                         },
                       ),
                       SizedBox(height: 5.v)
@@ -290,7 +310,18 @@ class _SignupScreen extends State<SignupScreen> {
   bool _isEmailValid(String email) {
     // return RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
     //     .hasMatch(email);
-    return RegExp(r'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(email);
+    // return RegExp(r'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+    //     .hasMatch(email);
+    return EmailValidator.isValid(email);
+  }
+
+  void _showSnackBar(String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 3), // Thời gian hiển thị của SnackBar
+    );
+
+    // Hiển thị SnackBar
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

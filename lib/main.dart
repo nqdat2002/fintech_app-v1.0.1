@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:fintech_app/screens/authentication_page.dart';
 import 'package:fintech_app/screens/welcome_screen.dart';
 import 'package:fintech_app/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +8,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:fintech_app/theme/theme_helper.dart';
 import 'package:fintech_app/routes/app_routes.dart';
 import 'package:fintech_app/director/app_route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'bloc/auth/authentication_bloc.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -21,7 +23,18 @@ void main() async{
     options: DefaultFirebaseOptions.currentPlatform,
   );
   ThemeHelper().changeTheme('primary');
-  runApp(MyApp());
+  // runApp(MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthenticationBloc>(
+          create: (BuildContext context) => AuthenticationBloc(),
+        ),
+        // Other providers...
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -46,10 +59,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 3),
+        Duration(
+            seconds: 3),
             () => Navigator.pushReplacement(context,
                     MaterialPageRoute(
-                        builder: (context) => OnboardingScreen()
+                        // builder: (context) => OnboardingScreen()
+                        builder: (context) => AuthenticationFlowScreen()
                   )
               )
     );
