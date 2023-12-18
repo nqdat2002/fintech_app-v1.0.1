@@ -3,6 +3,8 @@ import 'package:fintech_app/widgets/custom_elevated_button.dart';
 import 'package:fintech_app/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
+import '../../widgets/custom_floating_text_field.dart';
+
 class OwnTransfer extends StatefulWidget {
   const OwnTransfer({Key? key})
       : super(
@@ -16,9 +18,14 @@ class OwnTransfer extends StatefulWidget {
 class _OwnTransfer extends State<OwnTransfer>
     with AutomaticKeepAliveClientMixin<OwnTransfer> {
   TextEditingController frameController = TextEditingController();
+  String money = "";
+  TextEditingController _moneyInput = TextEditingController();
+
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -26,47 +33,58 @@ class _OwnTransfer extends State<OwnTransfer>
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Container(
-          width: double.maxFinite,
-          decoration: AppDecoration.fillGray,
-          child: Column(
-            children: [
-              SizedBox(height: 13.v),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.h),
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Transfer from",
-                          style: CustomTextStyles.labelLargeBlack900SemiBold_1,
+        body: Form(
+          key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          onChanged: (){
+            setState(() {
+              money = _moneyInput.text;
+            });
+          },
+          child: Container(
+            width: double.maxFinite,
+            decoration: AppDecoration.fillGray,
+            child: Column(
+              children: [
+                SizedBox(height: 13.v),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.h),
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Transfer from",
+                            style: CustomTextStyles.labelLargeBlack900SemiBold_1,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 7.v),
-                      _buildPersonalAccount(context),
-                      SizedBox(height: 8.v),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Transfer to",
-                          style: CustomTextStyles.labelLargeBlack900SemiBold_1,
+                        SizedBox(height: 7.v),
+                        _buildPersonalAccount(context),
+                        SizedBox(height: 8.v),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Transfer to",
+                            style: CustomTextStyles.labelLargeBlack900SemiBold_1,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 7.v),
-                      _buildPersonalAccount1(context),
-                      SizedBox(height: 16.v),
-                      _buildFrame(context),
-                      SizedBox(height: 15.v),
-                      _buildInputField(context),
-                      Spacer(),
-                      _buildContinue(context),
-                    ],
+                        SizedBox(height: 7.v),
+                        _buildPersonalAccount1(context),
+                        SizedBox(height: 16.v),
+                        _buildFrame(context),
+                        SizedBox(height: 16.v),
+                        _buildMoneyInput(context),
+                        SizedBox(height: 15.v),
+                        _buildInputField(context),
+                        Spacer(),
+                        _buildContinue(context),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -168,7 +186,23 @@ class _OwnTransfer extends State<OwnTransfer>
       borderDecoration: TextFormFieldStyleHelper.fillOnErrorContainer,
     );
   }
-
+  Widget _buildMoneyInput(BuildContext context) {
+    return CustomFloatingTextField(
+      controller: _moneyInput,
+      labelText: "Type Your Money",
+      labelStyle: CustomTextStyles.bodyMediumPrimary,
+      hintText: "Type Your Money",
+      hintStyle: CustomTextStyles.bodyMediumPrimary,
+      textInputAction: TextInputAction.done,
+      contentPadding: EdgeInsets.fromLTRB(14.h, 20.v, 14.h, 19.v),
+      validator: (value) {
+        if(value!.isEmpty){
+          return "Fill money";
+        }
+        return null;
+      },
+    );
+  }
   /// Section Widget
   Widget _buildInputField(BuildContext context) {
     return SizedBox(
@@ -213,23 +247,23 @@ class _OwnTransfer extends State<OwnTransfer>
                                   .titleLargeGeneralSansVariableGray90004,
                             ),
                             TextSpan(
-                              text: "0",
+                              text: "${money}",
                               style: CustomTextStyles.displayMedium40,
                             ),
                           ],
                         ),
                         textAlign: TextAlign.left,
                       ),
-                      SizedBox(
-                        height: 55.v,
-                        child: VerticalDivider(
-                          width: 1.h,
-                          thickness: 1.v,
-                          color: appTheme.teal400,
-                          indent: 11.h,
-                          endIndent: 12.h,
-                        ),
-                      ),
+                      // SizedBox(
+                      //   height: 55.v,
+                      //   child: VerticalDivider(
+                      //     width: 1.h,
+                      //     thickness: 1.v,
+                      //     color: appTheme.teal400,
+                      //     indent: 11.h,
+                      //     endIndent: 12.h,
+                      //   ),
+                      // ),
                     ],
                   ),
                   SizedBox(height: 4.v),
@@ -243,7 +277,7 @@ class _OwnTransfer extends State<OwnTransfer>
                           style: CustomTextStyles.labelLargeGray90004,
                         ),
                         Text(
-                          "Balance: 0 GBP",
+                          "Balance: ${money} GBP",
                           style: CustomTextStyles.labelLargeTeal400SemiBold12,
                         ),
                       ],
@@ -263,8 +297,12 @@ class _OwnTransfer extends State<OwnTransfer>
     return CustomElevatedButton(
       text: "Continue",
       buttonStyle: CustomButtonStyles.fillGray,
-      buttonTextStyle:
-      CustomTextStyles.titleMediumGeneralSansVariableBluegray20001,
+      buttonTextStyle: CustomTextStyles.titleMediumGeneralSansVariableBluegray20001,
+      onPressed: () => {
+        if(_formKey.currentState!.validate()){
+          print("press continued on Own Transfer")
+        }
+      },
     );
   }
 }

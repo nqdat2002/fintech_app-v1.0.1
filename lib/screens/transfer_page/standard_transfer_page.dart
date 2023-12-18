@@ -4,6 +4,8 @@ import 'package:fintech_app/widgets/custom_floating_text_field.dart';
 import 'package:fintech_app/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 
+import '../../presentation/review_details_screen/review_details_screen.dart';
+
 class StandardTransfer extends StatefulWidget {
   const StandardTransfer({Key? key}) : super(key: key,);
   @override
@@ -11,10 +13,14 @@ class StandardTransfer extends StatefulWidget {
 }
 
 class _StandardTransfer extends State<StandardTransfer> with AutomaticKeepAliveClientMixin<StandardTransfer> {
-  TextEditingController fullLegalNameController = TextEditingController();
-  TextEditingController fullLegalNameController1 = TextEditingController();
-  TextEditingController fullLegalNameController2 = TextEditingController();
-  String money = "";
+  TextEditingController recipientFill = TextEditingController();
+  TextEditingController recipientAccountNumberFill = TextEditingController();
+  TextEditingController noteFill = TextEditingController();
+
+  String _money = "0";
+  String _recipient = "";
+  String _recipientAccountNumber = "";
+  String _note = "";
   TextEditingController _moneyInput = TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -34,7 +40,11 @@ class _StandardTransfer extends State<StandardTransfer> with AutomaticKeepAliveC
           autovalidateMode: AutovalidateMode.onUserInteraction,
           onChanged: (){
             setState(() {
-              money = _moneyInput.text;
+              if (_money.isEmpty) _money = "0";
+              else _money = _moneyInput.text;
+              _recipient = recipientFill.text;
+              _recipientAccountNumber = recipientAccountNumberFill.text;
+              _note = noteFill.text;
             });
           },
           child: Container(
@@ -126,11 +136,17 @@ class _StandardTransfer extends State<StandardTransfer> with AutomaticKeepAliveC
   Widget _buildFullLegalName(BuildContext context) {
     return Expanded(
       child: CustomFloatingTextField(
-        controller: fullLegalNameController,
+        controller:recipientFill,
         labelText: "Recipient",
         labelStyle: CustomTextStyles.labelLargeSFProTextBlack900SemiBold_1,
         hintText: "Recipient",
         borderDecoration: FloatingTextFormFieldStyleHelper.outlineGrayTL12,
+        validator: (value) {
+          if(value!.isEmpty){
+            return "Fill Recipient";
+          }
+          return null;
+        },
       ),
     );
   }
@@ -160,19 +176,25 @@ class _StandardTransfer extends State<StandardTransfer> with AutomaticKeepAliveC
   /// Section Widget
   Widget _buildFullLegalName1(BuildContext context) {
     return CustomFloatingTextField(
-      controller: fullLegalNameController1,
+      controller: recipientAccountNumberFill,
       labelText: "Recipient’s account number",
       labelStyle: CustomTextStyles.labelLargeGray90004,
       hintText: "Recipient’s account number",
       hintStyle: CustomTextStyles.labelLargeGray90004,
       textInputType: TextInputType.number,
+      validator: (value) {
+        if(value!.isEmpty){
+          return "Fill Recipient's account number";
+        }
+        return null;
+      },
     );
   }
 
   /// Section Widget
   Widget _buildFullLegalName2(BuildContext context) {
     return CustomFloatingTextField(
-      controller: fullLegalNameController2,
+      controller: noteFill,
       labelText: "Add a note (optional)",
       labelStyle: CustomTextStyles.bodyMediumPrimary,
       hintText: "Add a note (optional)",
@@ -191,6 +213,15 @@ class _StandardTransfer extends State<StandardTransfer> with AutomaticKeepAliveC
       hintStyle: CustomTextStyles.bodyMediumPrimary,
       textInputAction: TextInputAction.done,
       contentPadding: EdgeInsets.fromLTRB(14.h, 20.v, 14.h, 19.v),
+      validator: (value) {
+        if(value!.isEmpty){
+          return "Fill money";
+        }
+        if (int.parse(value) == 0){
+          return "Money must be atleast £5";
+        }
+        return null;
+      },
     );
   }
 
@@ -238,7 +269,7 @@ class _StandardTransfer extends State<StandardTransfer> with AutomaticKeepAliveC
                                   .titleLargeGeneralSansVariableGray90004,
                             ),
                             TextSpan(
-                              text: "${money}",
+                              text: "${_money}",
                               style: CustomTextStyles.displayMedium40,
                             ),
                           ],
@@ -268,7 +299,7 @@ class _StandardTransfer extends State<StandardTransfer> with AutomaticKeepAliveC
                           style: CustomTextStyles.labelLargeGray90004,
                         ),
                         Text(
-                          "Balance: ${money} GBP",
+                          "Balance: ${_money} GBP",
                           style: CustomTextStyles.labelLargeTeal400SemiBold12,
                         ),
                       ],
@@ -287,8 +318,15 @@ class _StandardTransfer extends State<StandardTransfer> with AutomaticKeepAliveC
   Widget _buildContinue(BuildContext context) {
     return CustomElevatedButton(
       text: "Continue",
-      onPressed: () => {
-        print("press continued on Transfer")
+      onPressed: () {
+        if(_formKey.currentState!.validate()){
+          print("press continued on Transfer");
+          Navigator.push(context,
+              MaterialPageRoute(builder:
+                  (context) => ReviewDetailsScreen()
+              )
+          );
+        }
       },
     );
   }

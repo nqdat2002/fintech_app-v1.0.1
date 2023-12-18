@@ -246,7 +246,9 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Text(
                   "Enter the email address you use to sign in to SmartBank.",
                   style: theme.textTheme.labelLarge))
-        ]));
+        ]
+        )
+    );
   }
 
   /// Navigates back to the previous screen.
