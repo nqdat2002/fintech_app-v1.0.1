@@ -47,29 +47,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDtx3QGNrFWba2t76iZIk8VmSmrLsLXe0I',
-    appId: '1:627219651626:web:142f5173bf4ed70f607753',
-    messagingSenderId: '627219651626',
-    projectId: 'fintechappv2',
-    authDomain: 'fintechappv2.firebaseapp.com',
-    storageBucket: 'fintechappv2.appspot.com',
-    measurementId: 'G-P612Z66ZEK',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    authDomain: '',
+    storageBucket: '..',
+    measurementId: '',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC5vN3d1OGScFFeDRuIhKRlNoOWkcLBEoM',
-    appId: '1:627219651626:android:0103f93bdcc844d8607753',
-    messagingSenderId: '627219651626',
-    projectId: 'fintechappv2',
-    storageBucket: 'fintechappv2.appspot.com',
+    apiKey: '',
+    appId: ':::',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '..',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDYkQ5QLnhTIye1LJ9xcp77zgD7PKSRAWs',
-    appId: '1:627219651626:ios:296abb8add6c5029607753',
-    messagingSenderId: '627219651626',
-    projectId: 'fintechappv2',
-    storageBucket: 'fintechappv2.appspot.com',
-    iosBundleId: 'com.fintechapp.app',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '',
+    iosBundleId: '',
   );
 }
